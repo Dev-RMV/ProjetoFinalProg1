@@ -6,15 +6,19 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MedicoGUI extends JFrame {
-	private JTextField textFieldCrm;
-	private JTextField textFieldNome;
-	private JTextField textFieldCpf;
-	private JTextField textFieldTelefone;
+	private JTextField txtCrm;
+	private JTextField txtNome;
+	private JTextField txtCpf;
+	private JTextField txtTelefone;
 	private JLabel lblCrm;
 	private JLabel lblNome;
 	private JLabel lblCpf;
@@ -22,53 +26,41 @@ public class MedicoGUI extends JFrame {
 	private JLabel lblTelefone;
 	private JButton btnLimpar;
 	private JButton btnEnviar;
+	private JComboBox comboBoxEspecialidade;
 	
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MedicoGUI frame = new MedicoGUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public MedicoGUI() {
 		setBounds(100, 100, 418, 336);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
+		setLocationRelativeTo(null);
+		setVisible(true);
 		
-		textFieldCrm = new JTextField();
-		textFieldCrm.setBounds(71, 33, 264, 20);
-		getContentPane().add(textFieldCrm);
-		textFieldCrm.setColumns(10);
+		txtCrm = new JTextField();
+		txtCrm.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtCrm.setBounds(71, 33, 264, 20);
+		getContentPane().add(txtCrm);
+		txtCrm.setColumns(10);
 		
-		textFieldNome = new JTextField();
-		textFieldNome.setColumns(10);
-		textFieldNome.setBounds(71, 80, 264, 20);
-		getContentPane().add(textFieldNome);
+		txtNome = new JTextField();
+		txtNome.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtNome.setColumns(10);
+		txtNome.setBounds(71, 80, 264, 20);
+		getContentPane().add(txtNome);
 		
-		textFieldCpf = new JTextField();
-		textFieldCpf.setColumns(10);
-		textFieldCpf.setBounds(71, 127, 264, 20);
-		getContentPane().add(textFieldCpf);
+		txtCpf = new JTextField();
+		txtCpf.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtCpf.setColumns(10);
+		txtCpf.setBounds(71, 127, 264, 20);
+		getContentPane().add(txtCpf);
 		
-		textFieldTelefone = new JTextField();
-		textFieldTelefone.setColumns(10);
-		textFieldTelefone.setBounds(71, 221, 264, 20);
-		getContentPane().add(textFieldTelefone);
+		txtTelefone = new JTextField();
+		txtTelefone.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtTelefone.setColumns(10);
+		txtTelefone.setBounds(71, 221, 264, 20);
+		getContentPane().add(txtTelefone);
 		
-		JComboBox comboBoxEspecialidade = new JComboBox();
+		comboBoxEspecialidade = new JComboBox();
+		comboBoxEspecialidade.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		comboBoxEspecialidade.setMaximumRowCount(5);
 		comboBoxEspecialidade.setModel(new DefaultComboBoxModel(new String[] {"Cardiologista", "Clínico geral", "Dermatologista", "Endocrinologista", "Neurologista"}));
 		comboBoxEspecialidade.setBounds(71, 174, 264, 20);
@@ -76,37 +68,56 @@ public class MedicoGUI extends JFrame {
 		
 		
 		lblCrm = new JLabel("CRM");
-		lblCrm.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblCrm.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblCrm.setBounds(71, 17, 46, 14);
 		getContentPane().add(lblCrm);
 		
 		lblNome = new JLabel("NOME");
-		lblNome.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNome.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblNome.setBounds(71, 64, 46, 14);
 		getContentPane().add(lblNome);
 		
 		lblCpf = new JLabel("CPF");
-		lblCpf.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblCpf.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblCpf.setBounds(71, 111, 46, 14);
 		getContentPane().add(lblCpf);
 		
 		lblEspecialidade = new JLabel("ESPECIALIDADE");
-		lblEspecialidade.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblEspecialidade.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblEspecialidade.setBounds(71, 158, 149, 14);
 		getContentPane().add(lblEspecialidade);
 		
 		lblTelefone = new JLabel("TELEFONE");
-		lblTelefone.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblTelefone.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblTelefone.setBounds(71, 205, 86, 14);
 		getContentPane().add(lblTelefone);
 		
 		btnLimpar = new JButton("LIMPAR");
-		btnLimpar.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				txtCrm.setText("");
+				txtCpf.setText("");
+				txtTelefone.setText("");
+				txtNome.setText("");				
+			}
+		});
+		btnLimpar.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnLimpar.setBounds(68, 263, 119, 23);
 		getContentPane().add(btnLimpar);
 		
 		btnEnviar = new JButton("ENVIAR");
-		btnEnviar.setFont(new Font("Tahoma", Font.BOLD, 11));
+		btnEnviar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String nome = txtNome.getText();
+				String cpf = txtNome.getText();
+				String telefone = txtTelefone.getText();
+				String crm = txtCrm.getText();
+				if(nome.equals("")||cpf.equals("")||telefone.equals("")||crm.equals(""))
+					JOptionPane.showMessageDialog(null, "Preencha todos os campos");
+				else JOptionPane.showMessageDialog(null, "Cadastro feito com sucesso!");
+			}
+		});
+		btnEnviar.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnEnviar.setBounds(216, 263, 119, 23);
 		getContentPane().add(btnEnviar);
 
