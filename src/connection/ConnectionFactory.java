@@ -33,27 +33,27 @@ public class ConnectionFactory {
 	}
 	
 	public static void closeConnection(Connection con, PreparedStatement stmt) {
+		closeConnection(con);
 		if (stmt!=null) {
 			try {
-				con.close();
+				stmt.close();
 			} 
 			catch (SQLException e) {
-				JOptionPane.showMessageDialog(null,"Erro ao finalizar a conexão com o Banco de Dados!\n"+ e.getMessage());
+				JOptionPane.showMessageDialog(null,"Erro ao finalizar o Statement!\n"+ e.getMessage());
 			}
 		}
 	}
 	
 	public static void closeConnection(Connection con, PreparedStatement stmt, ResultSet rs) {
+		closeConnection(con,stmt);
 		if (rs!=null) {
 			try {
-				con.close();
+				rs.close();
 			} 
 			catch (SQLException e) {
-				JOptionPane.showMessageDialog(null,"Erro ao finalizar a conexão com o Banco de Dados!\n"+ e.getMessage());
+				JOptionPane.showMessageDialog(null,"Erro ao finalizar o ResultSet!\n"+ e.getMessage());
 			}
 		}
 	}
-	
-	
 }
 	
