@@ -29,6 +29,7 @@ public class MedicoGUI extends JFrame {
 	private JComboBox comboBoxEspecialidade;
 	
 	public MedicoGUI() {
+		setTitle("Cadastro de Médicos");
 		setBounds(100, 100, 418, 336);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
