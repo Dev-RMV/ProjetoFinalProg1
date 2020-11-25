@@ -2,12 +2,12 @@ package model;
 
 public class Medico {
 	private String nome;
-	private int cpf;
+	private long cpf;
 	private String crm;
-	private int telefone;
+	private long telefone;
 	private String especialidade;
 	
-	public Medico(String nome, int cpf, String crm, int telefone, String especialidade) {
+	public Medico(String nome, long cpf, String crm, long telefone, String especialidade) {
 		this.nome = nome;
 		this.cpf = cpf;
 		this.crm = crm;
@@ -23,11 +23,11 @@ public class Medico {
 		this.nome = nome;
 	}
 
-	public int getCpf() {
+	public long getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(int cpf) {
+	public void setCpf(long cpf) {
 		this.cpf = cpf;
 	}
 
@@ -39,11 +39,11 @@ public class Medico {
 		this.crm = crm;
 	}
 
-	public int getTelefone() {
+	public long getTelefone() {
 		return telefone;
 	}
 
-	public void setTelefone(int telefone) {
+	public void setTelefone(long telefone) {
 		this.telefone = telefone;
 	}
 
@@ -54,12 +54,4 @@ public class Medico {
 	public void setEspecialidade(String especialidade) {
 		this.especialidade = especialidade;
 	}
-	
-	
-	
-	
-	
-	
-	
-
 }

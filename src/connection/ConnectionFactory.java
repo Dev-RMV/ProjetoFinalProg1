@@ -7,13 +7,13 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 public class ConnectionFactory {
-	private static String url="jdbc:sqlserver://localhost;databaseName=Prog1";
-	private static String userName = "sa";
-	private static String password = "12345";
+	private final static String url="jdbc:sqlserver://localhost:1433;databaseName=Prog1";
+	private final static String userName = "user";
+	private final static String password = "12345";
 	
 	public static Connection getConnection() {
 		try {
-			return DriverManager.getConnection(url,userName,password);
+			return DriverManager.getConnection(url, userName, password);
 		} 
 		catch (SQLException e) {
 			JOptionPane.showMessageDialog(null,"Erro ao conectar o Banco de Dados!\n"+ e.getMessage());
