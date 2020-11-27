@@ -14,6 +14,10 @@ public class Medico {
 		this.telefone = telefone;
 		this.especialidade = especialidade;
 	}
+	
+	public Medico() {
+		
+	}
 
 	public String getNome() {
 		return nome;
@@ -53,5 +57,10 @@ public class Medico {
 
 	public void setEspecialidade(String especialidade) {
 		this.especialidade = especialidade;
+	}
+	
+	public String toString(Medico m) {
+		return m.toString();
+		
 	}
 }

@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -47,5 +49,32 @@ public class MedicoDao {
 			ConnectionFactory.closeConnection(con, stmt);
 		}
 	}
+	public List<Medico> read(){
+		Connection con=ConnectionFactory.getConnection();
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		List <Medico> medicos = new ArrayList<>();
+		String sqlConsulta = "select * from ProjetoFinal";
+		try {
+			stmt = con.prepareStatement(sqlConsulta);
+			rs=stmt.executeQuery();
+			while(rs.next()) {
+				Medico m = new Medico();
+				m.setCpf(rs.getLong("CPF"));
+				m.setNome(rs.getString("Nome"));
+				m.setCrm(rs.getString("CRM"));
+				m.setEspecialidade(rs.getString("Especialidade"));
+				m.setTelefone(rs.getLong("Telefone"));
+				medicos.add(m);
+			}
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, "Erro na consulta "+e.getMessage());
+		}
+		finally{
+			ConnectionFactory.closeConnection(con, stmt, rs);
+		}
+		return medicos;
+	}
+		
 
 }

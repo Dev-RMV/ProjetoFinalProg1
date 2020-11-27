@@ -3,15 +3,14 @@ package view;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.logging.Handler;
-import controller.LoginController;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import controller.MedicoController;
 
 public class LoginGUI extends JFrame {
 	private JTextField txtNome;
@@ -64,8 +63,17 @@ public class LoginGUI extends JFrame {
 				else if(!(login.equals("sa") || login.equals("user")) || !senha.equals("12345"))
 					JOptionPane.showMessageDialog(null, "Login ou Passord inválidos!");
 				else if ((login.equals("sa")||login.equals("user")) && senha.equals("12345")) {
-					MedicoGUI cadastro = new MedicoGUI(); 
-					setVisible(false);
+					//Assim que é validado o Login, é feita uma consulta para
+					//colocar o que está no BD na tela, já q são poucos dados.
+					try{
+						MedicoGUI cadastro = new MedicoGUI();
+						MedicoController mControl=new MedicoController();
+						cadastro.adicionarDados(mControl.consultar());
+						dispose();	
+					}
+					catch(Exception eD){
+						JOptionPane.showMessageDialog(null, "Erro desconhecido! Info:\n"+eD.getMessage());
+					}
 				}
 			}
 		});
