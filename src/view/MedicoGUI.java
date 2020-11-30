@@ -26,10 +26,10 @@ import java.awt.event.KeyEvent;
 import javax.swing.SwingConstants;
 
 public class MedicoGUI extends JFrame {
-	private JTextField txtCrm;
-	private JTextField txtNome;
-	private JTextField txtCpf;
-	private JTextField txtTelefone;
+	private static JTextField txtCrm;
+	private static JTextField txtNome;
+	private static JTextField txtCpf;
+	private static JTextField txtTelefone;
 	private JLabel lblCrm;
 	private JLabel lblNome;
 	private JLabel lblCpf;
@@ -112,7 +112,7 @@ public class MedicoGUI extends JFrame {
 		btnLimpar = new JButton("LIMPAR");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				limpar(); //Declarada no fim da classe				
+				MedicoController.limparCadastro();				
 			}
 		});
 		btnLimpar.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -175,7 +175,6 @@ public class MedicoGUI extends JFrame {
 		//Campo de consulta sensivel a qualquer tecla pressionada
 		//A Medida que é digitado, o texto é buscado na tabela.
 		txtConsulta = new JTextField();
-		txtConsulta.setToolTipText("");
 		txtConsulta.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -186,6 +185,7 @@ public class MedicoGUI extends JFrame {
 					//IMPORTANTE(1): É case sensitive, não consegui corrigir.
 					//IMPORTANTE(2): A ordenação é feita pelo 1 caractere, isso dá problema com números.
 					//para corrigir (2), o número de caracteres tem q ser igual (fazer validação).
+					//IMPORTANTE(3): Os dados são consultados da TABELA (model) e não do BD!!!
 					sorter.setRowFilter(RowFilter.regexFilter((txtConsulta.getText())));
 				}
 			}
@@ -197,7 +197,6 @@ public class MedicoGUI extends JFrame {
 		txtConsulta.setColumns(10);
 		
 		lblConsulta = new JLabel("CONSULTA");
-		lblConsulta.setToolTipText("");
 		lblConsulta.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblConsulta.setBounds(497, 241, 250, 21);
 		getContentPane().add(lblConsulta);
@@ -225,4 +224,46 @@ public class MedicoGUI extends JFrame {
 		txtTelefone.setText("");
 		txtNome.setText("");		
 	}
+
+	public static JTextField getTxtCrm() {
+		return txtCrm;
+	}
+
+	public void setTxtCrm(JTextField txtCrm) {
+		this.txtCrm = txtCrm;
+	}
+
+	public static JTextField getTxtNome() {
+		return txtNome;
+	}
+
+	public void setTxtNome(JTextField txtNome) {
+		this.txtNome = txtNome;
+	}
+
+	public static JTextField getTxtCpf() {
+		return txtCpf;
+	}
+
+	public void setTxtCpf(JTextField txtCpf) {
+		this.txtCpf = txtCpf;
+	}
+
+	public static JTextField getTxtTelefone() {
+		return txtTelefone;
+	}
+
+	public void setTxtTelefone(JTextField txtTelefone) {
+		this.txtTelefone = txtTelefone;
+	}
+
+	public JTextField getTxtConsulta() {
+		return txtConsulta;
+	}
+
+	public void setTxtConsulta(JTextField txtConsulta) {
+		this.txtConsulta = txtConsulta;
+	}
+	
+	
 }
