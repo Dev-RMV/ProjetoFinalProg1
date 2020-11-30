@@ -17,7 +17,6 @@ public class MedicoDao {
 	public boolean inserir (Medico m) {
 		Connection con = null;
 		PreparedStatement stmt= null;
-		ResultSet rs = null;
 		String sqlInsert="insert into ProjetoFinal(CPF,Nome,CRM,Especialidade,Telefone) values (?,?,?,?,?)";
 		
 		//Print de teste no console para fins de desenvolvimento:
@@ -74,5 +73,53 @@ public class MedicoDao {
 			ConnectionFactory.closeConnection(con, stmt, rs);
 		}
 		return medicos;
+	}
+	
+	public static void excluir (long cpfDelDao) {
+		Connection con = null;
+		PreparedStatement stmt= null;
+		String sqlDelete="select * from ProjetoFinal; delete from ProjetoFinal where CPF="+cpfDelDao;
+		con=ConnectionFactory.getConnection();
+		
+		try {
+			if (encontrarCpf(cpfDelDao)) {
+				stmt=null;
+				stmt=con.prepareStatement(sqlDelete);
+				stmt.execute();
+				stmt.close();
+				JOptionPane.showMessageDialog(null, "Sucesso na exclusão!");
+			}
+		}
+		catch(SQLException e) {
+			JOptionPane.showMessageDialog(null, "Erro na exclusão do Médico!"+e.getMessage(), "Erro", 2);
+		}
+		finally {
+			ConnectionFactory.closeConnection(con, stmt);
+		}
+	}	
+	public static boolean encontrarCpf(long cpfDelDao) {
+		Connection con=ConnectionFactory.getConnection();
+		PreparedStatement stmt= null;
+		ResultSet rs = null;
+		String sqlEncontraCpf="select * from ProjetoFinal where CPF="+cpfDelDao;
+		try {
+			stmt=con.prepareStatement(sqlEncontraCpf);
+			rs=stmt.executeQuery();
+			if (rs.next()) {
+				JOptionPane.showMessageDialog(null, "Dados encontrados! Preparando exclusão...");
+				stmt.close();
+				stmt=null;
+				return true;
+			}
+			else JOptionPane.showMessageDialog(null, "Dados não encontrados...");
+		}
+		catch(Exception e) {
+			JOptionPane.showMessageDialog(null, "Erro na busca!"+e.getMessage(), "Erro", 2);
+			return false;
+		}
+		finally {
+			ConnectionFactory.closeConnection(con);
+		}
+		return false;
 	}
 }

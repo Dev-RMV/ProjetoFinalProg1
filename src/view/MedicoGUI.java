@@ -26,9 +26,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.SwingConstants;
 
 public class MedicoGUI extends JFrame {
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private static JTextField txtCrm;
 	private static JTextField txtNome;
@@ -41,11 +39,13 @@ public class MedicoGUI extends JFrame {
 	private JLabel lblTelefone;
 	private JButton btnLimpar;
 	private JButton btnEnviar;
-	private JComboBox comboBoxEspecialidade;
-	private DefaultTableModel modelMedico;
+	private JButton btnDeletar;
+	private JButton btnAlterar;
+	private static JComboBox comboBoxEspecialidade;
+	private static DefaultTableModel modelMedico;
 	private JScrollPane scrollPane;
-	private JTable table;
-	private JTextField txtConsulta;
+	private static JTable table;
+	private static JTextField txtConsulta;
 	private JLabel lblConsulta;
 	private JLabel lblInstrucoes;
 	
@@ -120,43 +120,36 @@ public class MedicoGUI extends JFrame {
 			}
 		});
 		btnLimpar.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnLimpar.setBounds(155, 263, 119, 23);
+		btnLimpar.setBounds(139, 263, 119, 23);
 		getContentPane().add(btnLimpar);
 		
 		btnEnviar = new JButton("ENVIAR");
-		btnEnviar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String nome = txtNome.getText();
-				long cpf = -666;
-				String crm = txtCrm.getText();
-				long telefone = -666;
-				String especialidade = (String) comboBoxEspecialidade.getSelectedItem();
-				try{
-					cpf = Long.parseLong(txtCpf.getText());
-					telefone = Long.parseLong(txtTelefone.getText());
-				}
-				catch(Exception eInvalido){
-					JOptionPane.showMessageDialog(getContentPane(), "Dados inválidos!"+eInvalido.getMessage());
-				}
-				if(nome.equals("")||cpf==-666||telefone==-666||crm.equals(""))
-					JOptionPane.showMessageDialog(getContentPane(), "Preencha todos os campos");
-				else {
-					try{
-						MedicoController mControl=new MedicoController();
-						mControl.cadastrar(nome,cpf,crm,telefone,especialidade);
-						JOptionPane.showMessageDialog(getContentPane(), "Cadastro feito com sucesso!");
-						MedicoController.limpaCadastro();
-						adicionarDados(mControl.consultar());
-					}
-					catch(Exception eErroCadastro) {
-						JOptionPane.showMessageDialog(getContentPane(),"Algum erro ocorreu ao cadastrar... :(");
-					}
-				}
-			}
-		});
 		btnEnviar.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnEnviar.setBounds(10, 263, 119, 23);
 		getContentPane().add(btnEnviar);
+		btnEnviar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				switch(MedicoController.enviar()) {
+					case 1:{
+						JOptionPane.showMessageDialog(getContentPane(), "Dados inválidos!");
+						break;
+					}
+					case 2:{
+						JOptionPane.showMessageDialog(getContentPane(), "Preencha todos os campos");
+						break;
+					}
+					case 3:{
+						JOptionPane.showMessageDialog(getContentPane(),"Cadastro feito com sucesso!");
+						break;
+					}
+					default: {
+						JOptionPane.showMessageDialog(getContentPane(),"Algum erro ocorreu ao cadastrar... :(");
+						break;
+					}
+				}
+			}			
+		});
 		
 		modelMedico = new DefaultTableModel();
 		modelMedico.addColumn("CPF");
@@ -179,9 +172,12 @@ public class MedicoGUI extends JFrame {
 		//Campo de consulta sensivel a qualquer tecla pressionada
 		//A Medida que é digitado, o texto é buscado na tabela.
 		txtConsulta = new JTextField();
+		txtConsulta.setBounds(545, 264, 207, 25);
+		getContentPane().add(txtConsulta);
+		txtConsulta.setColumns(10);
 		txtConsulta.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyReleased(KeyEvent e) {
 				if (txtConsulta.getText().equals("")) {
 					sorter.setRowFilter(null);
 				}
@@ -196,13 +192,9 @@ public class MedicoGUI extends JFrame {
 		});
 		//Fim da implementação do listener de consulta.
 		
-		txtConsulta.setBounds(497, 264, 255, 25);
-		getContentPane().add(txtConsulta);
-		txtConsulta.setColumns(10);
-		
 		lblConsulta = new JLabel("CONSULTA");
 		lblConsulta.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblConsulta.setBounds(497, 241, 250, 21);
+		lblConsulta.setBounds(546, 242, 128, 21);
 		getContentPane().add(lblConsulta);
 		
 		lblInstrucoes = new JLabel("<html><b><u>IMPORTANTE:</b></u> A consulta é \"Case Sensitive\", e na tabela, a ordenação se dá pelo primeiro caractere contido no campo. Logo, números podem refletir uma ordenação errada caso não contenham o mesmo número de dígitos.</html>");
@@ -210,11 +202,26 @@ public class MedicoGUI extends JFrame {
 		lblInstrucoes.setVerticalAlignment(SwingConstants.TOP);
 		lblInstrucoes.setBounds(497, 37, 255, 106);
 		getContentPane().add(lblInstrucoes);
+		
+		btnDeletar = new JButton("DELETAR");
+		btnDeletar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MedicoController.deletar();
+			}
+		});
+		btnDeletar.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnDeletar.setBounds(268, 263, 119, 23);
+		getContentPane().add(btnDeletar);
+		
+		btnAlterar = new JButton("ALTERAR");
+		btnAlterar.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnAlterar.setBounds(397, 263, 119, 23);
+		getContentPane().add(btnAlterar);
 				
 	}
 	
 	//Adiciona dados na tabela, vindos da lista, que vem do BD!
-	public void adicionarDados (List <Medico> listM) {
+	public static void adicionarDados (List <Medico> listM) {
 		modelMedico.setNumRows(0);
 		for (Medico m: listM) {
 			Object[] medico = {m.getCpf(),m.getNome(),m.getCrm(),m.getEspecialidade(),m.getTelefone()};
@@ -254,11 +261,36 @@ public class MedicoGUI extends JFrame {
 		this.txtTelefone = txtTelefone;
 	}
 
-	public JTextField getTxtConsulta() {
+	public static JTextField getTxtConsulta() {
 		return txtConsulta;
 	}
 
 	public void setTxtConsulta(JTextField txtConsulta) {
 		this.txtConsulta = txtConsulta;
-	}	
+	}
+
+	public JButton getBtnLimpar() {
+		return btnLimpar;
+	}
+
+	public JButton getBtnEnviar() {
+		return btnEnviar;
+	}
+
+	public JButton getBtnDeletar() {
+		return btnDeletar;
+	}
+
+	public JButton getBtnAlterar() {
+		return btnAlterar;
+	}
+
+	public static JComboBox getComboBoxEspecialidade() {
+		return comboBoxEspecialidade;
+	}
+
+	public static JTable getTable() {
+		return table;
+	}
+	
 }
