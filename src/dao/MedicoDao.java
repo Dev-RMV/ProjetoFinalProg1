@@ -75,6 +75,4 @@ public class MedicoDao {
 		}
 		return medicos;
 	}
-		
-
 }

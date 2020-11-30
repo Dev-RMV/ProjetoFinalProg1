@@ -112,7 +112,7 @@ public class MedicoGUI extends JFrame {
 		btnLimpar = new JButton("LIMPAR");
 		btnLimpar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MedicoController.limparCadastro();				
+				MedicoController.limpaCadastro();				
 			}
 		});
 		btnLimpar.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -141,7 +141,7 @@ public class MedicoGUI extends JFrame {
 						MedicoController mControl=new MedicoController();
 						mControl.cadastrar(nome,cpf,crm,telefone,especialidade);
 						JOptionPane.showMessageDialog(getContentPane(), "Cadastro feito com sucesso!");
-						limpar();
+						MedicoController.limpaCadastro();
 						adicionarDados(mControl.consultar());
 					}
 					catch(Exception eErroCadastro) {
@@ -218,13 +218,6 @@ public class MedicoGUI extends JFrame {
 		}
 	}
 
-	private void limpar() {
-		txtCrm.setText("");
-		txtCpf.setText("");
-		txtTelefone.setText("");
-		txtNome.setText("");		
-	}
-
 	public static JTextField getTxtCrm() {
 		return txtCrm;
 	}
@@ -263,7 +256,5 @@ public class MedicoGUI extends JFrame {
 
 	public void setTxtConsulta(JTextField txtConsulta) {
 		this.txtConsulta = txtConsulta;
-	}
-	
-	
+	}	
 }

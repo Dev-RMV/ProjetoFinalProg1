@@ -6,15 +6,14 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import controller.MedicoController;
+import controller.LoginController;
 
 public class LoginGUI extends JFrame {
-	private JTextField txtNome;
-	private JPasswordField txtSenha;
+	private static JTextField txtNome;
+	private static JPasswordField txtSenha;
 	private JButton btnLimpar;
 	private JButton btnEnviar;
 	private JLabel lblLogin;
@@ -54,46 +53,34 @@ public class LoginGUI extends JFrame {
 		getContentPane().add(lblSenha);
 		
 		btnEnviar = new JButton("ENVIAR");
-		btnEnviar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String login = txtNome.getText();
-				String senha = String.valueOf(txtSenha.getPassword());
-				if(login.equals("") || senha.equals(""))
-					JOptionPane.showMessageDialog(null, "Preencha os campos");
-				else if(!(login.equals("sa") || login.equals("user")) || !senha.equals("12345"))
-					JOptionPane.showMessageDialog(null, "Login ou Passord inválidos!");
-				else if ((login.equals("sa")||login.equals("user")) && senha.equals("12345")) {
-					//Assim que é validado o Login, é feita uma consulta para
-					//colocar o que está no BD na tela, já q são poucos dados.
-					try{
-						MedicoGUI cadastro = new MedicoGUI();
-						MedicoController mControl=new MedicoController();
-						cadastro.adicionarDados(mControl.consultar());
-						dispose();	
-					}
-					catch(Exception eD){
-						JOptionPane.showMessageDialog(null, "Erro desconhecido! Info:\n"+eD.getMessage());
-					}
-				}
-			}
-		});
 		btnEnviar.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnEnviar.setBounds(25, 154, 107, 23);
 		getContentPane().add(btnEnviar);
-		
-		btnLimpar = new JButton("LIMPAR");
-		btnLimpar.addActionListener(new ActionListener() {
+		btnEnviar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				txtNome.setText("");
-				txtSenha.setText("");
+				if (LoginController.validaLogin()==true) {
+					dispose();
+				}					
 			}
 		});
 		
+		btnLimpar = new JButton("LIMPAR");
 		btnLimpar.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnLimpar.setBounds(142, 154, 107, 23);
 		getContentPane().add(btnLimpar);
+		btnLimpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LoginController.limpaLogin();
+			}
+		});
 
 	}
 
+	public static JTextField getTxtNome() {
+		return txtNome;
+	}
 
+	public static JPasswordField getTxtSenha() {
+		return txtSenha;
+	}
 }

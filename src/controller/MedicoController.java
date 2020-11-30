@@ -3,8 +3,6 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JTextField;
-
 import dao.MedicoDao;
 import model.Medico;
 import view.MedicoGUI;
@@ -24,7 +22,7 @@ public class MedicoController {
 		return medicos;
 	}
 	
-	public static void limparCadastro() {
+	public static void limpaCadastro() {
 		MedicoGUI.getTxtCrm().setText("");
 		MedicoGUI.getTxtCpf().setText("");
 		MedicoGUI.getTxtTelefone().setText("");
