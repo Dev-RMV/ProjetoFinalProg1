@@ -12,6 +12,8 @@ import javax.swing.JTextField;
 import controller.LoginController;
 
 public class LoginGUI extends JFrame {
+	
+	private static final long serialVersionUID = 1L;
 	private static JTextField txtNome;
 	private static JPasswordField txtSenha;
 	private JButton btnLimpar;

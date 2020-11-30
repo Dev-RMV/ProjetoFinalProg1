@@ -26,6 +26,10 @@ import java.awt.event.KeyEvent;
 import javax.swing.SwingConstants;
 
 public class MedicoGUI extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static JTextField txtCrm;
 	private static JTextField txtNome;
 	private static JTextField txtCpf;
