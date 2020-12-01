@@ -21,8 +21,7 @@ public class MedicoController {
 		MedicoDao mDao= new MedicoDao();
 		medicos=mDao.read();
 		return medicos;
-	}
-	
+	}	
 	
 	public static int enviar(){
 		String nome = MedicoGUI.getTxtNome().getText();
@@ -56,43 +55,68 @@ public class MedicoController {
 	}
 	
 	public static boolean deletar() {
-		String cpfDel ="";
-		cpfDel=MedicoGUI.getTxtConsulta().getText();
-		if (cpfDel.length()==0) {
+		if (MedicoGUI.getTxtConsulta().getText().length()==0) {
 			JOptionPane.showMessageDialog(null,"Digite no campo de consulta o CPF completo do Médico!");
 			return false;
 		}
 		try{
+			long cpfDao;
+			cpfDao= Long.parseLong(MedicoGUI.getTxtConsulta().getText());
 			int confirma=-1;
-			confirma=JOptionPane.showConfirmDialog(null,"Está certo de que quer deletar o médico de CPF "+cpfDel+"? ESSA OPERAÇÃO NÃO PODE SER DESFEITA!");
-			long cpfDelDao;
-			cpfDelDao= Long.parseLong(cpfDel);
+			confirma=JOptionPane.showConfirmDialog(null,"Está certo de que quer deletar o médico de CPF "+cpfDao+"? ESSA OPERAÇÃO NÃO PODE SER DESFEITA!");
 			if (confirma==0) {
-				MedicoDao.excluir(cpfDelDao);
-				MedicoGUI.adicionarDados(consultar());;
+				MedicoDao.excluir(cpfDao);
+				MedicoGUI.adicionarDados(consultar());
 				return true;
 			}
 		}
 		catch(Exception eCpf){
 			JOptionPane.showMessageDialog(null,"CPF inválido!"+eCpf.getMessage());
 		}
-		return false;
-		
-			
-		
-		
-		
-		
-		
-		
-		
-		
+		return false;						
 	}
 	
+	public static boolean alterar () {
+		if (MedicoGUI.getTxtConsulta().getText().length()==0) {
+			JOptionPane.showMessageDialog(null,"Digite no campo de consulta o CPF completo do Médico!");
+			return false;
+		}
+		try{
+			long cpfDao= Long.parseLong(MedicoGUI.getTxtConsulta().getText());
+			if(MedicoDao.encontrarCpf(cpfDao)==true){
+				String[] s = {"Cardiologista","Clínico geral","Dermatologista","Endocrinologista","Neurologista"};
+				int r=JOptionPane.showOptionDialog(null,"Entre com a especialidade", "Especialidade", 0, 0, null, s, 0);
+				String r2;
+				if(r==1)
+					r2=s[0];
+				else if(r==2)
+					r2=s[1];
+				else if(r==3)
+					r2=s[2];
+				else r2=s[4];
+				Medico mDao= new Medico(
+					JOptionPane.showInputDialog("Entre com o novo Nome:"),
+					Long.parseLong(JOptionPane.showInputDialog("Entre com o novo CPF:")),
+					JOptionPane.showInputDialog("Entre com o novo CRM:"),
+					Long.parseLong(JOptionPane.showInputDialog("Entre com o novo Telefone")),
+					r2
+				);
+				MedicoDao.update(mDao,cpfDao);
+				JOptionPane.showMessageDialog(null,"Dados alterados com sucesso!");
+				MedicoGUI.adicionarDados(consultar());
+				return true;
+			};
+		}
+		catch(Exception eInvalido) {
+			JOptionPane.showMessageDialog(null,"Dados inválidos ou não encontrados.");
+		}
+		return false;
+	}
+		
 	public static void limpaCadastro() {
 		MedicoGUI.getTxtCrm().setText("");
 		MedicoGUI.getTxtCpf().setText("");
 		MedicoGUI.getTxtTelefone().setText("");
-		MedicoGUI.getTxtNome().setText("");		
+		MedicoGUI.getTxtNome().setText("");	
 	}
 }

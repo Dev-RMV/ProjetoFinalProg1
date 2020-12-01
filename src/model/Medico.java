@@ -16,7 +16,6 @@ public class Medico {
 	}
 	
 	public Medico() {
-		
 	}
 
 	public String getNome() {
@@ -57,10 +56,5 @@ public class Medico {
 
 	public void setEspecialidade(String especialidade) {
 		this.especialidade = especialidade;
-	}
-	
-	public String toString(Medico m) {
-		return m.toString();
-		
-	}
+	}		
 }

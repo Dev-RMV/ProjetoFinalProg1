@@ -9,5 +9,4 @@ public class Main {
 		telaLogin= new LoginGUI();
 		telaLogin.setVisible(true);
 	}
-
 }

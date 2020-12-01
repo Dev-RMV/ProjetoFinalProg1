@@ -41,7 +41,7 @@ public class MedicoDao {
 			return true;
 		}
 		catch(SQLException e) {
-			JOptionPane.showMessageDialog(null, "Erro no cadastro do Médico!", "Erro", 2);
+			JOptionPane.showMessageDialog(null, "Erro no cadastro do Médico! Provavelmente já existe.", "Erro", 2);
 			return false;
 		}
 		finally {
@@ -75,14 +75,14 @@ public class MedicoDao {
 		return medicos;
 	}
 	
-	public static void excluir (long cpfDelDao) {
+	public static void excluir (long cpfDao) {
 		Connection con = null;
 		PreparedStatement stmt= null;
-		String sqlDelete="select * from ProjetoFinal; delete from ProjetoFinal where CPF="+cpfDelDao;
+		String sqlDelete="select * from ProjetoFinal; delete from ProjetoFinal where CPF="+cpfDao;
 		con=ConnectionFactory.getConnection();
 		
 		try {
-			if (encontrarCpf(cpfDelDao)) {
+			if (encontrarCpf(cpfDao)) {
 				stmt=null;
 				stmt=con.prepareStatement(sqlDelete);
 				stmt.execute();
@@ -97,16 +97,16 @@ public class MedicoDao {
 			ConnectionFactory.closeConnection(con, stmt);
 		}
 	}	
-	public static boolean encontrarCpf(long cpfDelDao) {
+	public static boolean encontrarCpf(long cpfDao) {
 		Connection con=ConnectionFactory.getConnection();
 		PreparedStatement stmt= null;
 		ResultSet rs = null;
-		String sqlEncontraCpf="select * from ProjetoFinal where CPF="+cpfDelDao;
+		String sqlEncontraCpf="select * from ProjetoFinal where CPF="+cpfDao;
 		try {
 			stmt=con.prepareStatement(sqlEncontraCpf);
 			rs=stmt.executeQuery();
 			if (rs.next()) {
-				JOptionPane.showMessageDialog(null, "Dados encontrados! Preparando exclusão...");
+				JOptionPane.showMessageDialog(null, "Dados encontrados!");
 				stmt.close();
 				stmt=null;
 				return true;
@@ -121,5 +121,41 @@ public class MedicoDao {
 			ConnectionFactory.closeConnection(con);
 		}
 		return false;
+	}
+	
+	public static boolean update (Medico m, long cpfDao) {
+		Connection con = null;
+		PreparedStatement stmt= null;
+		String sqlUpdate="update ProjetoFinal set CPF=?,Nome=?,CRM=?,Especialidade=?,Telefone=? where CPF="+cpfDao;
+		
+		//Print de teste no console para fins de desenvolvimento:
+		//Checando o valor dos atributos q são passados ao BD
+		System.out.println("**DESENVOLVIMENTO** CPF: "+m.getCpf());
+		System.out.println("**DESENVOLVIMENTO** NOME: "+m.getNome());
+		System.out.println("**DESENVOLVIMENTO** CRM: "+m.getCrm());
+		System.out.println("**DESENVOLVIMENTO** ESPECIALIDADE: "+m.getEspecialidade());
+		System.out.println("**DESENVOLVIMENTO** TELEFONE: "+m.getTelefone());
+		System.out.println("**DESENVOLVIMENTO** CpfDao: "+cpfDao);
+		//Fim dos prints no console
+		
+		con=ConnectionFactory.getConnection();
+		
+		try {
+			stmt=con.prepareStatement(sqlUpdate);
+			stmt.setLong(1, m.getCpf());
+			stmt.setString(2, m.getNome());
+			stmt.setString(3, m.getCrm());
+			stmt.setString(4, m.getEspecialidade());
+			stmt.setLong(5, m.getTelefone());
+			stmt.execute();
+			return true;
+		}
+		catch(SQLException e) {
+			JOptionPane.showMessageDialog(null, "Erro ao alterar Médico!"+e.getMessage(), "Erro", 2);
+			return false;
+		}
+		finally {
+			ConnectionFactory.closeConnection(con, stmt);
+		}
 	}
 }
