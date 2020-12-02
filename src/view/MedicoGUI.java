@@ -27,6 +27,9 @@ import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.UIManager;
 import java.awt.SystemColor;
+import javax.swing.Box;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 public class MedicoGUI extends JFrame {
 	
@@ -51,6 +54,7 @@ public class MedicoGUI extends JFrame {
 	private static JTextField txtConsulta;
 	private JLabel lblConsulta;
 	private JLabel lblInstrucoes;
+	private JLabel lblNewLabel;
 	
 	public MedicoGUI() {
 		setFont(UIManager.getFont("PasswordField.font"));
@@ -97,7 +101,7 @@ public class MedicoGUI extends JFrame {
 		getContentPane().add(txtTelefone);
 		
 		comboBoxEspecialidade = new JComboBox();
-		comboBoxEspecialidade.setForeground(new Color(0, 204, 102));
+		comboBoxEspecialidade.setForeground(new Color(0, 100, 0));
 		comboBoxEspecialidade.setBackground(Color.GRAY);
 		comboBoxEspecialidade.setFont(new Font("Tahoma", Font.BOLD, 14));
 		comboBoxEspecialidade.setMaximumRowCount(5);
@@ -148,7 +152,7 @@ public class MedicoGUI extends JFrame {
 		});
 		
 		btnAlterar = new JButton("ALTERAR");
-		btnAlterar.setForeground(Color.BLUE);
+		btnAlterar.setForeground(new Color(139, 69, 19));
 		btnAlterar.setBackground(Color.DARK_GRAY);
 		btnAlterar.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnAlterar.setBounds(397, 263, 119, 23);
@@ -267,6 +271,11 @@ public class MedicoGUI extends JFrame {
 		lblalteraoEExclusodigite.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblalteraoEExclusodigite.setBounds(497, 157, 255, 68);
 		getContentPane().add(lblalteraoEExclusodigite);
+		
+		lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\rmvor\\Downloads\\6tag_100714-171817_Easy-Resize.com.jpg"));
+		lblNewLabel.setBounds(326, 57, 149, 169);
+		getContentPane().add(lblNewLabel);
 	}
 	
 	//Adiciona dados na tabela, vindos da lista, que vem do BD!
@@ -321,4 +330,10 @@ public class MedicoGUI extends JFrame {
 	public static JTable getTable() {
 		return table;
 	}	
+	public Icon getLblNewLabelIcon() {
+		return lblNewLabel.getIcon();
+	}
+	public void setLblNewLabelIcon(Icon icon) {
+		lblNewLabel.setIcon(icon);
+	}
 }
