@@ -37,7 +37,7 @@ public class MedicoController {
 			System.out.println("DESENVOLVIMENTO -> ERRO: "+eInvalido.getMessage());
 			return 1;
 		}
-		if(nome.equals("")||cpf==-666||telefone==-666||crm.equals(""))
+		if(nome.equals("")||cpf==-666||telefone==-666||crm.equals("")|| especialidade.equals("Selecione"))
 			return 2;
 		else {
 			try{
@@ -85,15 +85,14 @@ public class MedicoController {
 			long cpfDao= Long.parseLong(MedicoGUI.getTxtConsulta().getText());
 			if(MedicoDao.encontrarCpf(cpfDao)==true){
 				String[] s = {"Cardiologista","Clínico geral","Dermatologista","Endocrinologista","Neurologista"};
-				int r=JOptionPane.showOptionDialog(null,"Entre com a especialidade", "Especialidade", 0, 0, null, s, 0);
-				String r2;
-				if(r==1)
-					r2=s[0];
-				else if(r==2)
-					r2=s[1];
-				else if(r==3)
-					r2=s[2];
-				else r2=s[4];
+				int r=JOptionPane.showOptionDialog(null,"Entre com a especialidade", "Especialidade", 0, 1, null, s, 0);
+				int i;
+				String r2="";
+				for(i=0;i<5;i++) {
+					r2=s[i];
+					if (i==r) break;
+				}
+				
 				Medico mDao= new Medico(
 					JOptionPane.showInputDialog("Entre com o novo Nome:"),
 					Long.parseLong(JOptionPane.showInputDialog("Entre com o novo CPF:")),
@@ -117,6 +116,7 @@ public class MedicoController {
 		MedicoGUI.getTxtCrm().setText("");
 		MedicoGUI.getTxtCpf().setText("");
 		MedicoGUI.getTxtTelefone().setText("");
-		MedicoGUI.getTxtNome().setText("");	
+		MedicoGUI.getTxtNome().setText("");
+		MedicoGUI.getComboBoxEspecialidade().setSelectedIndex(0);
 	}
 }

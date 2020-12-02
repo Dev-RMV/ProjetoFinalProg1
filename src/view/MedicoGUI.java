@@ -26,8 +26,6 @@ import java.awt.event.KeyEvent;
 import javax.swing.SwingConstants;
 import java.awt.Color;
 import javax.swing.UIManager;
-import java.awt.SystemColor;
-import javax.swing.Box;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
@@ -100,12 +98,13 @@ public class MedicoGUI extends JFrame {
 		txtTelefone.setBounds(10, 221, 264, 25);
 		getContentPane().add(txtTelefone);
 		
-		comboBoxEspecialidade = new JComboBox();
+		String[] modelCb={"Selecione","Cardiologista", "Clínico geral", "Dermatologista", "Endocrinologista", "Neurologista"};
+		comboBoxEspecialidade = new JComboBox(modelCb);
 		comboBoxEspecialidade.setForeground(new Color(0, 100, 0));
 		comboBoxEspecialidade.setBackground(Color.GRAY);
 		comboBoxEspecialidade.setFont(new Font("Tahoma", Font.BOLD, 14));
-		comboBoxEspecialidade.setMaximumRowCount(5);
-		comboBoxEspecialidade.setModel(new DefaultComboBoxModel(new String[] {"Cardiologista", "Clínico geral", "Dermatologista", "Endocrinologista", "Neurologista"}));
+		comboBoxEspecialidade.setMaximumRowCount(6);
+		
 		comboBoxEspecialidade.setBounds(10, 174, 264, 25);
 		getContentPane().add(comboBoxEspecialidade);
 				
@@ -278,7 +277,7 @@ public class MedicoGUI extends JFrame {
 		getContentPane().add(lblNewLabel);
 	}
 	
-	//Adiciona dados na tabela, vindos da lista, que vem do BD!
+	//Adiciona dados na tabela(modelo), vindos da lista, que vem do BD!
 	public static void adicionarDados (List <Medico> listM) {
 		modelMedico.setNumRows(0);
 		for (Medico m: listM) {
@@ -291,7 +290,7 @@ public class MedicoGUI extends JFrame {
 		return txtCrm;
 	}
 
-		public static JTextField getTxtNome() {
+	public static JTextField getTxtNome() {
 		return txtNome;
 	}
 
@@ -326,6 +325,10 @@ public class MedicoGUI extends JFrame {
 	public static JComboBox getComboBoxEspecialidade() {
 		return comboBoxEspecialidade;
 	}
+	
+	public static void setComboBoxEspecialidade(JComboBox comboBoxEspecialidade) {
+		MedicoGUI.comboBoxEspecialidade = comboBoxEspecialidade;
+	}
 
 	public static JTable getTable() {
 		return table;
@@ -336,4 +339,5 @@ public class MedicoGUI extends JFrame {
 	public void setLblNewLabelIcon(Icon icon) {
 		lblNewLabel.setIcon(icon);
 	}
+	
 }

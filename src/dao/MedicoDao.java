@@ -21,7 +21,7 @@ public class MedicoDao {
 		
 		//Print de teste no console para fins de desenvolvimento:
 		//Checando o valor dos atributos q são passados ao BD
-		System.out.println("**DESENVOLVIMENTO** CPF:"+m.getCpf());
+		System.out.println("\n\n**DESENVOLVIMENTO** CPF:"+m.getCpf());
 		System.out.println("**DESENVOLVIMENTO** NOME:"+m.getNome());
 		System.out.println("**DESENVOLVIMENTO** CRM:"+m.getCrm());
 		System.out.println("**DESENVOLVIMENTO** ESPECIALIDADE:"+m.getEspecialidade());
@@ -130,7 +130,7 @@ public class MedicoDao {
 		
 		//Print de teste no console para fins de desenvolvimento:
 		//Checando o valor dos atributos q são passados ao BD
-		System.out.println("**DESENVOLVIMENTO** CPF: "+m.getCpf());
+		System.out.println("\n\n**DESENVOLVIMENTO** CPF: "+m.getCpf());
 		System.out.println("**DESENVOLVIMENTO** NOME: "+m.getNome());
 		System.out.println("**DESENVOLVIMENTO** CRM: "+m.getCrm());
 		System.out.println("**DESENVOLVIMENTO** ESPECIALIDADE: "+m.getEspecialidade());
